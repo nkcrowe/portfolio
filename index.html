@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nick Kyriakides-Crowe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --ink-light: #6b6760;
+    --ink-faint: #c2bfb8;
+    --paper: #f7f5f0;
+    --paper-warm: #efece4;
+    --accent: #2a4a7f;
+    --accent-faint: rgba(42,74,127,0.08);
+    --rule: rgba(26,24,20,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* ── grain overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── layout ── */
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── header ── */
+  header {
+    padding: 5rem 0 3.5rem;
+    border-bottom: 0.5px solid var(--rule);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .name {
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 1.1rem;
+  }
+
+  .name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 1.75rem;
+  }
+
+  .header-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .header-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--ink-faint);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .header-links a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── section ── */
+  section {
+    padding: 3rem 0;
+    border-bottom: 0.5px solid var(--rule);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── about ── */
+  .about-text {
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--ink);
+  }
+
+  .about-text p + p {
+    margin-top: 1rem;
+  }
+
+  /* ── projects ── */
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-top: 0.5px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 4px;
+  }
+
+  .project:first-child { border-top: none; }
+
+  .project:hover {
+    background: var(--accent-faint);
+  }
+
+  .project:hover .project-arrow {
+    transform: translate(3px, -3px);
+    color: var(--accent);
+  }
+
+  .project-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--ink-light);
+    background: var(--paper-warm);
+    border: 0.5px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 7px;
+  }
+
+  .project-arrow {
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+    transition: transform 0.2s, color 0.2s;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .project-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #8a6a2a;
+    background: #f5ead8;
+    border: 0.5px solid rgba(138,106,42,0.25);
+    border-radius: 2px;
+    padding: 1px 6px;
+    display: inline-block;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .project-status.done {
+    color: #2a5a2a;
+    background: #e8f5e8;
+    border-color: rgba(42,90,42,0.25);
+  }
+
+  /* ── interests ── */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 3rem;
+  }
+
+  .interest-group {}
+
+  .interest-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+
+  .interest-group ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .interest-group li {
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    line-height: 1.5;
+    padding-left: 0.9rem;
+    position: relative;
+  }
+
+  .interest-group li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+    font-size: 0.8rem;
+  }
+
+  /* ── footer ── */
+  footer {
+    padding: 2.5rem 0 4rem;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+  }
+
+  .footer-email {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--ink-light);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--ink-faint);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .footer-email:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── animation ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  header { animation-delay: 0s; }
+  section:nth-of-type(1) { animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation-delay: 0.18s; }
+  section:nth-of-type(3) { animation-delay: 0.26s; }
+  footer { animation-delay: 0.32s; }
+
+  /* ── responsive ── */
+  @media (max-width: 500px) {
+    .interests-grid { grid-template-columns: 1fr; }
+    header { padding: 3rem 0 2.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="name">Nick<br><em>Kyriakides-Crowe</em></h1>
+    <p class="tagline">MS Applied Mathematics student at USC. Interested in stochastic processes, optimization, and operations research. Working toward a PhD in OR.</p>
+    <nav class="header-links">
+      <a href="https://github.com/YOUR_USERNAME" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/nick-kyriakidescrowe" target="_blank">LinkedIn</a>
+      <a href="mailto:nkyriaki@usc.edu">Email</a>
+      <a href="YOUR_RESUME_LINK" target="_blank">Résumé</a>
+    </nav>
+  </header>
+
+  <section>
+    <div class="section-label">About</div>
+    <div class="about-text">
+      <p>I'm a graduating BME senior at USC transitioning into an Applied Mathematics master's, with the goal of pursuing a PhD in Operations Research. My research interests sit at the intersection of probability theory, stochastic control, and computational methods.</p>
+      <p>My background spans biomedical engineering, neural implant research, and independent work in financial mathematics. A recurring thread across my projects is the connection between <em>ill-posed inverse problems</em> — CT image reconstruction, volatility surface calibration — and the regularization techniques that make them tractable.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Projects</div>
+    <div class="project-list">
+
+      <a class="project" href="https://github.com/YOUR_USERNAME/stochastic-vol-calibration" target="_blank">
+        <div>
+          <div class="project-title">Stochastic Optimal Stopping &amp; Volatility Calibration <span class="project-status">In progress</span></div>
+          <div class="project-desc">A 14-week independent study implementing Longstaff-Schwartz Monte Carlo for American option pricing and Tikhonov-regularized volatility surface calibration — framed as a regularized inverse problem analogous to CT reconstruction.</div>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Stochastic Calculus</span>
+            <span class="tag">Monte Carlo</span>
+            <span class="tag">Inverse Problems</span>
+          </div>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a class="project" href="https://github.com/YOUR_USERNAME/dicom-ct-reconstruction" target="_blank">
+        <div>
+          <div class="project-title">CT Image Reconstruction from DICOM Data <span class="project-status done">Complete</span></div>
+          <div class="project-desc">MATLAB implementation of the Radon transform and Fourier Slice Theorem to reconstruct 2D images from 23,000+ sinogram data points. Multi-step numerical pipeline with visualization at each stage.</div>
+          <div class="project-tags">
+            <span class="tag">MATLAB</span>
+            <span class="tag">Inverse Problems</span>
+            <span class="tag">Signal Processing</span>
+          </div>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a class="project" href="https://github.com/YOUR_USERNAME/equity-analytics" target="_blank">
+        <div>
+          <div class="project-title">Equity &amp; Portfolio Analytics Tool <span class="project-status done">Complete</span></div>
+          <div class="project-desc">Python-based tool using yfinance for automated ingestion and analysis of historical market data. Computes return series, volatility, cumulative performance, and cross-asset benchmarking across configurable time horizons.</div>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Time Series</span>
+            <span class="tag">Finance</span>
+          </div>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a class="project" href="https://github.com/YOUR_USERNAME/hydrogel-data-pipeline" target="_blank">
+        <div>
+          <div class="project-title">Conductive Hydrogel Data Pipeline <span class="project-status done">Complete</span></div>
+          <div class="project-desc">MATLAB pipeline handling 15,000+ data points from impedance and sheet resistance testing across 50+ CNT-composite hydrogel formulations. Built for the Tringides Lab at Rice University.</div>
+          <div class="project-tags">
+            <span class="tag">MATLAB</span>
+            <span class="tag">Biomaterials</span>
+            <span class="tag">Data Pipeline</span>
+          </div>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Research Interests</div>
+    <div class="interests-grid">
+      <div class="interest-group">
+        <div class="interest-group-title">Mathematics</div>
+        <ul>
+          <li>Probability theory &amp; stochastic processes</li>
+          <li>Stochastic optimal control</li>
+          <li>Convex &amp; numerical optimization</li>
+          <li>Regularization &amp; inverse problems</li>
+        </ul>
+      </div>
+      <div class="interest-group">
+        <div class="interest-group-title">Applications</div>
+        <ul>
+          <li>Operations research</li>
+          <li>Healthcare systems optimization</li>
+          <li>Computational finance</li>
+          <li>Monte Carlo methods</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-note">USC · Applied Mathematics MS · 2026–2027</span>
+      <a class="footer-email" href="mailto:nkyriaki@usc.edu">nkyriaki@usc.edu</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
